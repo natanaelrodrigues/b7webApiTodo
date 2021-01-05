@@ -46,7 +46,12 @@ class ApiController extends Controller
         $array = ['error' => ''];
         
         $todo = Todo::find($id);
-        $array['todo'] = $todo;
+        if ($todo) {
+            $array['todo'] = $todo;
+        } else {
+            $array['error'] = 'ID Inexistente';
+        }
+        
 
         return $array;
     }

@@ -57,7 +57,42 @@ class ApiController extends Controller
     }
 
     public function updateTodo(Request $request, $id){
+        $array = ['error' => ''];
 
+        $rules = [
+            'title' => 'min:3',
+            'done' => 'boolean' //true, false, 1, 0,'1','0'
+        ];
+
+
+        $validator = Validator::make($request->all(), $rules);
+    
+
+        if ( $validator->fails()) {
+            $array['error'] = $validator->messages();
+            return $array;
+        }
+
+        $title = $request->input('title');
+        $done = $request->input('done');
+
+        $todo = Todo::find($id);
+        if ($todo){
+            if ($title) {
+                $todo->title = $title;
+            }
+    
+            if($done !== NULL) {
+                $todo->done = $done;
+            }
+            
+            $todo->save();
+        } else {
+            $array['error'] = 'ID Inexistente';
+        }
+
+
+        return $array;
     }
 
     public function deleteTodo($id){

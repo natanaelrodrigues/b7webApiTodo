@@ -39,12 +39,16 @@ class ApiController extends Controller
         $todos = Todo::all();
         $array['list'] = $todos;
 
-
         return $array;
     }
 
     public function readTodo($id){
+        $array = ['error' => ''];
+        
+        $todo = Todo::find($id);
+        $array['todo'] = $todo;
 
+        return $array;
     }
 
     public function updateTodo(Request $request, $id){

@@ -19,8 +19,9 @@ Route::get('/unauthenticated', function(){
 Route::middleware('auth:sanctum')->post('/todo',[ApiController::class,'createTodo']);
 Route::get('/todos',[ApiController::class,'readAllTodos']);
 Route::get('/todo/{id}',[ApiController::class,'readTodo']);
-Route::put('/todo/{id}',[ApiController::class,'updateTodo']);
-Route::delete('/todo/{id}',[ApiController::class,'deleteTodo']);
+Route::middlewaware('auth:sanctum')->getput('/todo/{id}',[ApiController::class,'updateTodo']);
+Route::middlewaware('auth:sanctum')->getdelete('/todo/{id}',[ApiController::class,'deleteTodo']);
 
 Route::post('/user',[AuthController::class,'create']);
+Route::middlewaware('auth:sanctum')->get('/auth/logout',[AuthController::class, 'logout']);
 Route::post('/auth',[AuthController::class, 'login']);

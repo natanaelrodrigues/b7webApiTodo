@@ -62,5 +62,15 @@ class AuthController extends Controller
 
         return $array;
     }
+
+    public function logout(Request $request){
+        $array = ['error' => ''];
+
+        $user = $request->user();
+        $user->tokens()->delete();
+
+
+        return $array;
+    }
 }
 
